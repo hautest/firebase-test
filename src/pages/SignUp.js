@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
-
-import { authService } from "../firebase";
+import { authService, dbService } from "../firebase";
 
 export function SignUp() {
   const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickName, setNickName] = useState("");
+
   useEffect(() => {
+    dbService
+      .collection("User")
+      .get()
+      .then((arr) => {
+        arr.forEach((data) => {
+          console.log(data.data());
+        });
+      });
     authService.onAuthStateChanged((data) => {
       if (data) {
         nav("/");
       }
     });
   }, [nav]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     authService
@@ -24,8 +33,12 @@ export function SignUp() {
         console.log(data);
         updateProfile(authService.currentUser, {
           displayName: nickName,
-        }).then((data) => {
-          console.log(data);
+        });
+        dbService.collection("User").doc(email).set({
+          email: email,
+          password: password,
+          displayName: nickName,
+          uid: data.user.uid,
         });
       })
       .catch((error) => {

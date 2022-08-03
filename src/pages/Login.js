@@ -1,13 +1,41 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../firebase";
 
 export function Login() {
   const nav = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    authService
+      .signInWithEmailAndPassword(email, password)
+      .then((data) => console.log(data));
+  };
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+  useEffect(() => {
+    authService.onAuthStateChanged((data) => {
+      if (data) {
+        nav("/");
+      }
+    });
+  }, [nav]);
   return (
     <main>
       <div>Login</div>
-      <form>
-        <input placeholder="이메일" />
-        <input placeholder="비밀번호" />
+      <form onSubmit={handleSubmit}>
+        <input onChange={handleEmail} value={email} placeholder="이메일" />
+        <input
+          onChange={handlePassword}
+          type="password"
+          value={password}
+          placeholder="비밀번호"
+        />
         <button>로그인</button>
       </form>
       <div>

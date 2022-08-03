@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 
 import { authService } from "../firebase";
@@ -59,6 +59,10 @@ export function SignUp() {
         />
         <button>회원가입</button>
       </form>
+      <div>
+        계정이 있으시면
+        <Link to="/login">로그인</Link>
+      </div>
     </div>
   );
 }

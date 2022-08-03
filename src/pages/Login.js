@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { dbService } from "../firebase";
 import { authService } from "../firebase";
 
 export function Login() {
@@ -8,9 +9,12 @@ export function Login() {
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    authService
-      .signInWithEmailAndPassword(email, password)
-      .then((data) => console.log(data));
+    authService.signInWithEmailAndPassword(email, password).then((data) => {
+      console.log(data);
+      dbService.collection("User").doc(email).update({
+        login: true,
+      });
+    });
   };
   const handleEmail = (e) => {
     setEmail(e.target.value);

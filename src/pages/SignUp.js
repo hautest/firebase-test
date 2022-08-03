@@ -10,14 +10,6 @@ export function SignUp() {
   const [nickName, setNickName] = useState("");
 
   useEffect(() => {
-    dbService
-      .collection("User")
-      .get()
-      .then((arr) => {
-        arr.forEach((data) => {
-          console.log(data.data());
-        });
-      });
     authService.onAuthStateChanged((data) => {
       if (data) {
         nav("/");
@@ -39,6 +31,7 @@ export function SignUp() {
           password: password,
           displayName: nickName,
           uid: data.user.uid,
+          login: true,
         });
       })
       .catch((error) => {

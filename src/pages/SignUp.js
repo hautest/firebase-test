@@ -30,6 +30,7 @@ export function SignUp() {
           password: password,
           displayName: nickName,
           uid: data.user.uid,
+          chat: [],
           login: true,
         });
       })

@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-export function CheckBox({ state, setState, value }) {
+export function CheckBox({ setState, value }) {
   const [checked, setChecked] = useState(false);
+
   const handleOnClick = () => {
     setChecked((prev) => !prev);
     setState((prev) => {

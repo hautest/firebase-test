@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { dbService } from "../firebase";
 import { CheckBox } from "./CheckBox";
 
-export function UserList({ check, state, setState, fixedCheck }) {
+export function UserList({ check, setState, fixedCheck }) {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -34,8 +34,8 @@ export function UserList({ check, state, setState, fixedCheck }) {
           <div>{arr.displayName}</div>
           <div>{arr.email}</div>
           {check &&
-            (fixedCheck !== arr.uid ? (
-              <CheckBox setState={setState} state={state} value={arr.uid} />
+            (fixedCheck !== arr.email ? (
+              <CheckBox setState={setState} value={arr.email} />
             ) : (
               <div
                 style={{

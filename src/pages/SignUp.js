@@ -22,7 +22,6 @@ export function SignUp() {
     authService
       .createUserWithEmailAndPassword(email, password)
       .then((data) => {
-        console.log(data);
         updateProfile(authService.currentUser, {
           displayName: nickName,
         });

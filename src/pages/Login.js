@@ -10,7 +10,6 @@ export function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     authService.signInWithEmailAndPassword(email, password).then((data) => {
-      console.log(data);
       dbService.collection("User").doc(email).update({
         login: true,
       });

@@ -24,15 +24,15 @@ export function Chatting() {
   };
 
   const handleMakeChat = () => {
-    dbService
-      .collection("Chatting")
-      .doc(chatName)
-      .set({
-        participant: state,
-        id: Math.round(Math.random() * 10000001) + 1,
-        message: [],
-      });
+    const id = Math.round(Math.random() * 10000001) + 1;
+    dbService.collection("Chatting").doc(chatName).set({
+      participant: state,
+      id,
+      message: [],
+      chatName,
+    });
     setMakeChatting(false);
+    nav(String(id));
   };
 
   useEffect(() => {
